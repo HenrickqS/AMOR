@@ -56,7 +56,7 @@ function atualizarContador() {
     `${horas}h ${minutos}min ${segundos}s`
 }
 
-setInterval(atualizarContador, 30000)
+setInterval(atualizarContador, 1000)
 atualizarContador()
 
 // ===== CARROSSEL =====
@@ -97,8 +97,9 @@ prevBtn.addEventListener("click", () => {
 // Autoplay a cada 4 segundos
 let autoPlay = setInterval(() => {
   proximoSlide()
-}, 4000)
+}, 60000)
 
 // Mostrar o slide inicial
 mostrarSlide(index)
+
 
