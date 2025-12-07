@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap");
 
+/* ================= GLOBAL ================= */
 * {
   margin: 0;
   padding: 0;
@@ -17,8 +18,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ================= BOTÃO ================= */
-
+/* ================= BOTÃO INICIAL ================= */
 .btn-default {
   display: flex;
   justify-content: center;
@@ -37,20 +37,22 @@ body {
   transition: 0.3s;
 }
 
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 rgba(190, 0, 190, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(190, 0, 190, 1);
-  }
-  100% {
-    box-shadow: 0 0 0 rgba(190, 0, 190, 0.4);
-  }
+.btn-default button:hover {
+  background-color: rgb(190, 0, 190);
+  transform: scale(1.05);
 }
 
-/* ================= CONTEÚDO ================= */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 rgba(190,0,190,0.6); }
+  50% { box-shadow: 0 0 18px rgba(190,0,190,1); }
+  100% { box-shadow: 0 0 0 rgba(190,0,190,0.6); }
+}
 
+.btn-default.active {
+  display: none;
+}
+
+/* ================= MESSAGE ================= */
 .message {
   display: none;
 }
@@ -74,66 +76,68 @@ body {
 
 .message p {
   font-size: 14px;
-  max-width: 340px;
+  padding: 6px;
   font-weight: 600;
+  max-width: 340px;
 }
-
-/* ================= CONTADOR ================= */
 
 #contador {
   color: yellow;
   font-size: 14px;
   font-weight: 600;
+  margin-bottom: 6px;
 }
 
 /* ================= CARROSSEL ================= */
-
 .carrossel {
   position: relative;
-  width: 320px;
-  margin: 16px auto;
+  width: 100%;
+  max-width: 300px; /* largura total do bloco */
+  margin: 10px auto;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .slides {
-  width: 220px;
-  height: auto;
-  position: relative;
-  overflow: hidden;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* ===== ANIMAÇÃO REAL DOS SLIDES ===== */
-
 .slide {
-  position: absolute;
-  inset: 0;
-  width: 220px;
-  height: auto;
-  border-radius: 12px;
-  object-fit: contain;
-
-  opacity: 0;
-  transform: translateX(40px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  display: none;
+  width: 100%;
 }
 
 .slide.active {
-  opacity: 1;
-  transform: translateX(0);
-  position: relative;
-  z-index: 1;
+  display: block;
+  animation: fadeIn 0.8s ease-in-out;
 }
 
-/* ================= SETAS FORA DA IMAGEM ================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
 
+/* IMAGENS DO SLIDER */
+.slide-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ================= BOTÕES LATERAIS ================= */
 .prev,
 .next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0,0,0,0.6);
   color: white;
   border: none;
   font-size: 18px;
@@ -146,67 +150,36 @@ body {
 
 .prev:hover,
 .next:hover {
-  background: rgb(190, 0, 190);
+  background: rgb(190,0,190);
   transform: translateY(-50%) scale(1.12);
 }
 
-/* ✅ Setas realmente FORA */
-.prev {
-  left: -45px;
-}
-.next {
-  right: -45px;
-}
+.prev { left: -50px; }  /* espaço da seta à esquerda da imagem */
+.next { right: -50px; } /* espaço da seta à direita da imagem */
 
 /* ================= AUDIO ================= */
-
 audio {
   width: 100%;
   max-width: 260px;
   margin-top: 10px;
 }
 
-/* ================= PC ================= */
-
+/* ================= PC / NOTEBOOK ================= */
 @media (min-width: 1024px) {
   .message.active {
     max-width: 900px;
     gap: 22px;
   }
 
-  .message h1 {
-    font-size: 38px;
-  }
+  .message h1 { font-size: 38px; }
+  .message p { font-size: 18px; max-width: 700px; }
+  #contador { font-size: 18px; }
 
-  .message p {
-    font-size: 18px;
-    max-width: 700px;
-  }
+  .carrossel { max-width: 400px; }
+  .slide-img { max-width: 400px; }
 
-  #contador {
-    font-size: 18px;
-  }
+  audio { max-width: 520px; }
 
-  .carrossel {
-    width: 420px;
-  }
-
-  .slides {
-    width: 300px;
-  }
-
-  .slide {
-    width: 300px;
-  }
-
-  audio {
-    max-width: 520px;
-  }
-
-  .prev {
-    left: -55px;
-  }
-  .next {
-    right: -55px;
-  }
+  .btn-default button { font-size: 22px; padding: 20px 46px; }
+  .prev, .next { font-size: 24px; padding: 14px 18px; }
 }
