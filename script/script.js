@@ -56,7 +56,7 @@ function atualizarContador() {
     `${horas}h ${minutos}min ${segundos}s`
 }
 
-setInterval(atualizarContador, 1000)
+setInterval(atualizarContador, 30000)
 atualizarContador()
 
 // ===== CARROSSEL =====
@@ -101,3 +101,4 @@ let autoPlay = setInterval(() => {
 
 // Mostrar o slide inicial
 mostrarSlide(index)
+
