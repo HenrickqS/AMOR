@@ -1,105 +1,81 @@
-// ===== BOTÃO PRINCIPAL =====
-const btnWrapper = document.querySelector(".btn-default")
-const btn = document.querySelector(".btn-default button")
-const menu = document.querySelector(".message")
+// ===== BOTÃO PRINCIPAL (mostrar mensagem e sumir botão) =====
+const btnWrapper = document.querySelector(".btn-default");
+const btn = document.querySelector(".btn-default button");
+const menu = document.querySelector(".message");
 
 btn.addEventListener("click", () => {
-  menu.classList.add("active") // mostra a mensagem
-  btnWrapper.style.display = "none" // some com o botão
-})
+  menu.classList.add("active"); // mostra a mensagem
+  btnWrapper.style.display = "none"; // some com o botão
+});
 
 // ===== CONTADOR =====
-const dataInicial = new Date(2024, 0, 1, 0, 0, 0) // 01/01/2024 00:00:00
+const dataInicial = new Date(2024, 0, 1, 0, 0, 0); // 1º de Janeiro de 2024
 
 function atualizarContador() {
-  const agora = new Date()
+  const agora = new Date();
+  let diferenca = agora - dataInicial;
 
-  let anos = agora.getFullYear() - dataInicial.getFullYear()
-  let meses = agora.getMonth() - dataInicial.getMonth()
-  let dias = agora.getDate() - dataInicial.getDate()
-  let horas = agora.getHours() - dataInicial.getHours()
-  let minutos = agora.getMinutes() - dataInicial.getMinutes()
-  let segundos = agora.getSeconds() - dataInicial.getSeconds()
+  const segundos = Math.floor(diferenca / 1000);
+  const minutos = Math.floor(segundos / 60);
+  const horas = Math.floor(minutos / 60);
+  const dias = Math.floor(horas / 24);
+  const meses = Math.floor(dias / 30.4375);
+  const anos = Math.floor(meses / 12);
 
-  // Ajuste de valores negativos
-  if (segundos < 0) {
-    segundos += 60
-    minutos--
-  }
-  if (minutos < 0) {
-    minutos += 60
-    horas--
-  }
-  if (horas < 0) {
-    horas += 24
-    dias--
-  }
-  if (dias < 0) {
-    const ultimoDiaMesAnterior = new Date(
-      agora.getFullYear(),
-      agora.getMonth(),
-      0
-    ).getDate()
-    dias += ultimoDiaMesAnterior
-    meses--
-  }
-  if (meses < 0) {
-    meses += 12
-    anos--
-  }
-
-  // Contar o dia atual
-  dias += 1
+  const segundosRestantes = segundos % 60;
+  const minutosRestantes = minutos % 60;
+  const horasRestantes = horas % 24;
+  const diasRestantes = Math.floor(dias % 30.4375);
+  const mesesRestantes = meses % 12;
 
   document.getElementById("contador").innerText =
-    `${anos} anos, ${meses} meses, ${dias} dias, ` +
-    `${horas}h ${minutos}min ${segundos}s`
+    `${anos} anos, ${mesesRestantes} meses, ${diasRestantes} dias, ` +
+    `${horasRestantes}h ${minutosRestantes}min ${segundosRestantes}s`;
 }
 
-setInterval(atualizarContador, 1000)
-atualizarContador()
+setInterval(atualizarContador, 1000);
+atualizarContador();
 
 // ===== CARROSSEL =====
-const slides = document.querySelectorAll(".slide")
-const nextBtn = document.querySelector(".next")
-const prevBtn = document.querySelector(".prev")
+const slides = document.querySelectorAll(".slide");
+const nextBtn = document.querySelector(".next");
+const prevBtn = document.querySelector(".prev");
 
-let index = 0
+let index = 0;
 
+// Mostra o slide atual
 function mostrarSlide(n) {
-  slides.forEach((slide) => slide.classList.remove("active"))
-  slides[n].classList.add("active")
+  slides.forEach(slide => slide.classList.remove("active"));
+  slides[n].classList.add("active");
 }
 
+// Avança para o próximo slide
 function proximoSlide() {
-  index++
-  if (index >= slides.length) index = 0
-  mostrarSlide(index)
+  index++;
+  if (index >= slides.length) index = 0;
+  mostrarSlide(index);
 }
 
+// Volta para o slide anterior
 function slideAnterior() {
-  index--
-  if (index < 0) index = slides.length - 1
-  mostrarSlide(index)
+  index--;
+  if (index < 0) index = slides.length - 1;
+  mostrarSlide(index);
 }
 
-// Botões laterais
+// Eventos dos botões
 nextBtn.addEventListener("click", () => {
-  proximoSlide()
-  clearInterval(autoPlay)
-})
+  proximoSlide();
+  clearInterval(autoPlay); // pausa autoplay ao clicar
+});
 
 prevBtn.addEventListener("click", () => {
-  slideAnterior()
-  clearInterval(autoPlay)
-})
+  slideAnterior();
+  clearInterval(autoPlay); // pausa autoplay ao clicar
+});
 
-// Autoplay a cada 4 segundos
-let autoPlay = setInterval(() => {
-  proximoSlide()
-}, 60000)
+// Autoplay a cada 1 minuto (60000ms)
+let autoPlay = setInterval(proximoSlide, 60000);
 
-// Mostrar o slide inicial
-mostrarSlide(index)
-
-
+// Inicializa o primeiro slide
+mostrarSlide(index);
